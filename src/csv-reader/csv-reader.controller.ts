@@ -5,7 +5,7 @@ import { CsvReaderService } from './csv-reader.service';
 export class CsvReaderController {
     constructor(private readonly csvReaderService:CsvReaderService){}
     @Get()
-    getcsvData():any{
+   async getcsvData():Promise<any>{
         console.log('ok');     
 
         return this.csvReaderService.getcsvData();
