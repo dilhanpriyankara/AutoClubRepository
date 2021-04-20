@@ -46,6 +46,7 @@ export class CsvReaderService {
                     const job =  this.csvQue.add({
                         foo: results,                
                     }); 
+                    
                     console.log('CSV file successfully added to que');
                     resolve("CSV file successfully added to que") ;
                 }); 
@@ -54,4 +55,45 @@ export class CsvReaderService {
     });
 
     }
+	
+	 async pushDataToBullQueue(data):Promise<any>{
+	  let results = []; 
+	  return new Promise(resolve => {
+		  let csvDataBuffer = JSON.stringify(data);
+		  let csvData = JSON.parse(csvDataBuffer).data;
+		  let csvDataString = csvData.toString("utf8"); 
+		  
+		 // console.log('ok '+csvDataString.split('\n').slice(1));    
+		  const arrdata=csvDataString.split('\n').slice(1);
+		  arrdata.map((text)=>{
+			 
+		  const arr= text.split(',');
+		  //console.log(arr);
+		  var today = new Date();
+		  var manufactureddate = new Date(arr[7]);
+		  var age_of_vehicle = today.getFullYear() - manufactureddate.getFullYear();
+
+		  let autoclub=new AutoClubdataDto({
+						id: arr[0],
+						first_name: arr[1],
+						last_name: arr[2],               
+						email:arr[3],
+						car_make:arr[4],
+						car_model:arr[5],
+						vin_number:arr[6],
+						manufactured_date:arr[7],
+						age_of_vehicle:age_of_vehicle
+					});
+					console.log(autoclub);
+					
+			results.push(autoclub);
+			  
+		  })
+			const job =  this.csvQue.add({foo: results,}); 
+			console.log('CSV file successfully added to que');
+            resolve("CSV file successfully added to que") ;
+	  
+	}); 
+	 }
+	
 }

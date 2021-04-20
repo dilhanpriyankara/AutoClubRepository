@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CsvReaderService } from './csv-reader.service';
+import {AutoClubdataDto} from '../dto/AutoClubdataDto';
 
 @Controller('csvreader')
 export class CsvReaderController {
@@ -10,4 +11,14 @@ export class CsvReaderController {
 
         return this.csvReaderService.getcsvData();
     }
+
+
+    @Post()
+    async createcsvData(@Body() data):Promise<any>{	 
+	  
+	   return this.csvReaderService.pushDataToBullQueue(data);
+		
+	
+    }
+
 }
