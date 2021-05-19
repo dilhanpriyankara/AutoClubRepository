@@ -84,7 +84,7 @@ export class CsvReaderService {
 						manufactured_date:arr[7],
 						age_of_vehicle:age_of_vehicle
 					});
-					console.log(autoclub);
+					//console.log(autoclub);
 					
 			results.push(autoclub);
 			  

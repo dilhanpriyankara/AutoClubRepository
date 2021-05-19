@@ -15,7 +15,7 @@ export class CsvReaderController {
 
     @Post()
     async createcsvData(@Body() data):Promise<any>{	 
-	  
+	   
 	   return this.csvReaderService.pushDataToBullQueue(data);
 		
 	
